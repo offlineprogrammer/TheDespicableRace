@@ -132,6 +132,9 @@ public class MainActivity extends AppCompatActivity {
                 case SUCCESSFUL:
                     Receipt receipt = purchaseResponse.getReceipt();
                     Log.i(TAG, "onPurchaseResponse: SKU is "+ receipt.getSku());
+                    Message m= new Message();
+                    m.obj=receipt.getSku();
+                    handler.handleMessage(m);
                     PurchasingService.notifyFulfillment(purchaseResponse.getReceipt().getReceiptId(),
                             FulfillmentResult.FULFILLED);
                     break ;
@@ -148,9 +151,6 @@ public class MainActivity extends AppCompatActivity {
                         // Process receipts
                         if (!receipt.isCanceled()){
                             Log.i(TAG, "onPurchaseUpdatesResponse: SKU is " + receipt.getSku());
-                            Message m= new Message();
-                            m.obj=receipt.getSku();
-                            handler.handleMessage(m);
                         } else {
                             Log.i(TAG, "onPurchaseUpdatesResponse: cancelled SKU " + receipt.getSku());
                         }
