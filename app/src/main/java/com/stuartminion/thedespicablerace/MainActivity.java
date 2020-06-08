@@ -28,10 +28,8 @@ import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-
     String shinyWheelsSKU = "com.stuartminion.thedespicablerace.shinywheels";
     Handler handler;
-    //Define UserId and MarketPlace
     private String currentUserId;
     private String currentMarketplace;
 
@@ -43,8 +41,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupIAP() {
-
-
         Log.d(TAG, "onCreate: registering PurchasingListener");
         PurchasingService.registerListener(this, purchasingListener);
         Button raceCarButton =  findViewById(R.id.raceCarButton);
@@ -54,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
                 PurchasingService.purchase(shinyWheelsSKU);
             }
         });
-
         //create a handler for the UI changes
         handler = new Handler(Looper.getMainLooper()) {
             @Override
@@ -104,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
         public void onProductDataResponse(ProductDataResponse productDataResponse) {
             switch (productDataResponse.getRequestStatus()) {
                 case SUCCESSFUL:
-
                     //get informations for all IAP Items (parent SKUs)
                     final Map<String, Product> products = productDataResponse.getProductData();
                     for ( String key : products.keySet()) {
@@ -118,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
                 case FAILED:
-
                     Log.i(TAG, "onProductDataResponse: Failed");
                     break ;
                 case NOT_SUPPORTED:
